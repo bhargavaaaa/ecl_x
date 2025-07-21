@@ -14,12 +14,6 @@ return [
                 'user-create' => 'User Create',
                 'user-edit' => 'User Edit',
                 'user-delete' => 'User Delete'
-            ],
-            'Order' => [
-                'order-view' => 'Order View',
-                'order-create' => 'Order Create',
-                'order-edit' => 'Order Edit',
-                'order-delete' => 'Order Delete'
             ]
         ]
     ]

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -40,10 +39,6 @@ Route::middleware('auth')->group(function () {
     Route::get('user/check-phone-unique/{user?}', [UserController::class, 'checkPhoneUnique'])->name('user.check-phone-unique');
     Route::resource('user', UserController::class)->except(['show']);
     /* User routes */
-
-    /* Order routes */
-    Route::resource('order', OrderController::class)->except(['show']);
-    /* Order routes */
 
     /* Profile */
     Route::post('profile/update-password', [ProfileController::class, 'update_password'])->name('profile.update-password');

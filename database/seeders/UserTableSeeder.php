@@ -25,7 +25,7 @@ class UserTableSeeder extends Seeder
                 'country_id' => Country::where('name', 'india')->value('id'),
                 'state_id' => State::where('name', 'gujarat')->value('id'),
                 'city_id' => City::where('name', 'rajkot')->value('id'),
-                'address' => "Soni Bazar, Rajkot."
+                'address' => "Nana Mauva, Rajkot."
             ]);
 
             $role = Role::create([

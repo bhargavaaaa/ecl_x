@@ -8,7 +8,7 @@
             <div>
                 <a class="fw-bold tracking-wide mx-auto" href="/">
                     <span class="smini-hidden">
-                        <span style="color: #0059a1;">Akshar</span>
+                        <span style="color: #0059a1;">ECL X</span>
                     </span>
                 </a>
             </div>
@@ -76,25 +76,18 @@
                             <span class="nav-main-link-name">Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-main-item">
+                    <li class="nav-main-item d-none">
                         <a class="nav-main-link {{ request()->segment(1) === 'role' ? 'active' : '' }}"
                            href="{{ route('role.index') }}">
                             <i class="nav-main-link-icon fa fa-user-group"></i>
                             <span class="nav-main-link-name">Role</span>
                         </a>
                     </li>
-                    <li class="nav-main-item">
+                    <li class="nav-main-item d-none">
                         <a class="nav-main-link {{ request()->segment(1) === 'user' ? 'active' : '' }}"
                            href="{{ route('user.index') }}">
                             <i class="nav-main-link-icon fa fa-user"></i>
                             <span class="nav-main-link-name">User</span>
-                        </a>
-                    </li>
-                    <li class="nav-main-item">
-                        <a class="nav-main-link {{ request()->segment(1) === 'order' ? 'active' : '' }}"
-                           href="{{ route('order.index') }}">
-                            <i class="nav-main-link-icon fa fa-exchange"></i>
-                            <span class="nav-main-link-name">Order</span>
                         </a>
                     </li>
                 </ul>
