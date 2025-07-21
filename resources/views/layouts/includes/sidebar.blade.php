@@ -76,18 +76,11 @@
                             <span class="nav-main-link-name">Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-main-item d-none">
-                        <a class="nav-main-link {{ request()->segment(1) === 'role' ? 'active' : '' }}"
-                           href="{{ route('role.index') }}">
-                            <i class="nav-main-link-icon fa fa-user-group"></i>
-                            <span class="nav-main-link-name">Role</span>
-                        </a>
-                    </li>
-                    <li class="nav-main-item d-none">
-                        <a class="nav-main-link {{ request()->segment(1) === 'user' ? 'active' : '' }}"
-                           href="{{ route('user.index') }}">
-                            <i class="nav-main-link-icon fa fa-user"></i>
-                            <span class="nav-main-link-name">User</span>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->segment(1) === 'form' ? ' active' : '' }}"
+                           href="{{ route('form.index') }}">
+                            <i class="nav-main-link-icon fa fa-pen-clip"></i>
+                            <span class="nav-main-link-name">Form</span>
                         </a>
                     </li>
                 </ul>
