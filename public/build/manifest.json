@@ -1,0 +1,85 @@
+{
+  "resources/fonts/fontawesome/fa-brands-400.ttf": {
+    "file": "assets/fa-brands-400-D7HcTrzQ.ttf",
+    "src": "resources/fonts/fontawesome/fa-brands-400.ttf"
+  },
+  "resources/fonts/fontawesome/fa-brands-400.woff2": {
+    "file": "assets/fa-brands-400-C-jaCRNI.woff2",
+    "src": "resources/fonts/fontawesome/fa-brands-400.woff2"
+  },
+  "resources/fonts/fontawesome/fa-regular-400.ttf": {
+    "file": "assets/fa-regular-400-BSSd-Tma.ttf",
+    "src": "resources/fonts/fontawesome/fa-regular-400.ttf"
+  },
+  "resources/fonts/fontawesome/fa-regular-400.woff2": {
+    "file": "assets/fa-regular-400-TCCU0xbi.woff2",
+    "src": "resources/fonts/fontawesome/fa-regular-400.woff2"
+  },
+  "resources/fonts/fontawesome/fa-solid-900.ttf": {
+    "file": "assets/fa-solid-900-f4MajOib.ttf",
+    "src": "resources/fonts/fontawesome/fa-solid-900.ttf"
+  },
+  "resources/fonts/fontawesome/fa-solid-900.woff2": {
+    "file": "assets/fa-solid-900-tLH6XCuf.woff2",
+    "src": "resources/fonts/fontawesome/fa-solid-900.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-300.woff2": {
+    "file": "assets/inter-v12-latin-300-DEbyFmpd.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-300.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-500.woff2": {
+    "file": "assets/inter-v12-latin-500-DfX5FI9E.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-500.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-600.woff2": {
+    "file": "assets/inter-v12-latin-600-BvOeHRLc.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-600.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-700.woff2": {
+    "file": "assets/inter-v12-latin-700-Bj1B9WKG.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-700.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-800.woff2": {
+    "file": "assets/inter-v12-latin-800-Bdy4lAMa.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-800.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-900.woff2": {
+    "file": "assets/inter-v12-latin-900-CMga-52B.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-900.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-regular.woff2": {
+    "file": "assets/inter-v12-latin-regular-YtgfLPRn.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-regular.woff2"
+  },
+  "resources/fonts/simple-line-icons/Simple-Line-Icons.eot": {
+    "file": "assets/Simple-Line-Icons-CKKl-dGR.eot",
+    "src": "resources/fonts/simple-line-icons/Simple-Line-Icons.eot"
+  },
+  "resources/fonts/simple-line-icons/Simple-Line-Icons.svg": {
+    "file": "assets/Simple-Line-Icons-DsHGv33-.svg",
+    "src": "resources/fonts/simple-line-icons/Simple-Line-Icons.svg"
+  },
+  "resources/fonts/simple-line-icons/Simple-Line-Icons.ttf": {
+    "file": "assets/Simple-Line-Icons-mVuQrdSX.ttf",
+    "src": "resources/fonts/simple-line-icons/Simple-Line-Icons.ttf"
+  },
+  "resources/fonts/simple-line-icons/Simple-Line-Icons.woff": {
+    "file": "assets/Simple-Line-Icons-BAgH0-Pt.woff",
+    "src": "resources/fonts/simple-line-icons/Simple-Line-Icons.woff"
+  },
+  "resources/fonts/simple-line-icons/Simple-Line-Icons.woff2": {
+    "file": "assets/Simple-Line-Icons-D0KobG-u.woff2",
+    "src": "resources/fonts/simple-line-icons/Simple-Line-Icons.woff2"
+  },
+  "resources/js/codebase/app.js": {
+    "file": "assets/app-Dwd4-Fdp.js",
+    "name": "app",
+    "src": "resources/js/codebase/app.js",
+    "isEntry": true
+  },
+  "resources/sass/main.scss": {
+    "file": "assets/main-CyL4q69q.css",
+    "src": "resources/sass/main.scss",
+    "isEntry": true
+  }
+}
