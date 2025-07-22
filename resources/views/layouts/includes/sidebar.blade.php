@@ -70,17 +70,10 @@
             <div class="content-side content-side-full">
                 <ul class="nav-main">
                     <li class="nav-main-item">
-                        <a class="nav-main-link{{ request()->segment(1) === 'dashboard' ? ' active' : '' }}"
-                           href="{{ route('dashboard') }}">
-                            <i class="nav-main-link-icon fa fa-house-user"></i>
-                            <span class="nav-main-link-name">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->segment(1) === 'form' ? ' active' : '' }}"
                            href="{{ route('form.index') }}">
                             <i class="nav-main-link-icon fa fa-pen-clip"></i>
-                            <span class="nav-main-link-name">Form</span>
+                            <span class="nav-main-link-name">Forms</span>
                         </a>
                     </li>
                 </ul>

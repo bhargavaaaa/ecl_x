@@ -28,7 +28,7 @@ Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm
 
 /* Common Routes */
 Route::middleware('auth')->group(function () {
-    Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::redirect('dashboard', 'form')->name('dashboard');
 
     /* Role routes */
     Route::get('role/check-name-unique/{role?}', [RoleController::class, 'checkNameUnique'])->name('role.check-name-unique');
