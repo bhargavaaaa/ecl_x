@@ -26,6 +26,12 @@
                     <div class="col text-end">
                         <div class="row d-flex justify-content-end">
                             <div class="col-auto p-0 pe-1">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#add_rich_text_model">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Add Rich Text
+                                </a>
+                            </div>
+                            <div class="col-auto p-0 pe-1">
                                 <a href="javascript:void(0)" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#add_image_model">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     Add Image
@@ -134,6 +140,8 @@
     @include('form.edit_title')
     @include('form.add_image')
     @include('form.edit_image')
+    @include('form.add_rich_text')
+    @include('form.edit_rich_text')
 @endsection
 
 @section('js')
@@ -141,10 +149,11 @@
     @include('layouts.includes.validation_scripts')
     @include('layouts.includes.sweetalert2_scripts')
     @include('layouts.includes.magnific_popup_scripts')
+    @include('layouts.includes.ckeditor_scripts')
     <script>
         $(function() {
             let isLoading = false;
-            Codebase.helpersOnLoad(['jq-magnific-popup', 'jq-validation']);
+            Codebase.helpersOnLoad(['js-ckeditor', 'jq-magnific-popup', 'jq-validation']);
 
             jQuery("#form_form").validate({
                 rules: {
@@ -523,6 +532,227 @@
                             success: function(result) {
                                 if(result.status == true) {
                                     image_datatable.ajax.reload();
+                                    Codebase.helpers('jq-notify', {
+                                        align: 'right',
+                                        from: 'top',
+                                        type: 'success',
+                                        icon: 'fa fa-check me-1',
+                                        message: result.message
+                                    });
+                                } else {
+                                    Codebase.helpers('jq-notify', {
+                                        z_index: 99999,
+                                        align: 'right',
+                                        from: 'top',
+                                        type: 'danger',
+                                        icon: 'fa fa-times me-1',
+                                        message: result.message
+                                    });
+                                }
+                            },
+                            error: function(xhr) {
+                                Codebase.helpers('jq-notify', {
+                                    z_index: 99999,
+                                    align: 'right',
+                                    from: 'top',
+                                    type: 'danger',
+                                    icon: 'fa fa-times me-1',
+                                    message: (xhr.status === 422) ? xhr.responseJSON.message : xhr.responseText
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            let rich_text_datatable = $(".rich_text_datatable").DataTable({
+                serverSide: true,
+                scrollX: true,
+                ajax: "{{ route('form.rich-texts.item_get', $form) }}",
+                columns: [{
+                    data: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                    {
+                        data: 'name'
+                    },
+                    {
+                        data: 'value'
+                    },
+                    {
+                        data: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
+
+            $(document).on('shown.bs.modal', '#add_rich_text_model', function () {
+                if (CKEDITOR.instances.add_rich_text_value) {``
+                    CKEDITOR.instances.add_rich_text_value.destroy();
+                }
+                CKEDITOR.replace('add_rich_text_value');
+
+                setTimeout(function () {
+                    CKEDITOR.instances.add_rich_text_value.setData("");
+                }.bind(this), 100);
+            });
+
+            $(document).on('submit', '#add_rich_text_form', function (e) {
+                e.preventDefault();
+                if (isLoading) {
+                    return false;
+                }
+
+                isLoading = true;
+
+                let formData = new FormData(this);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route("form.rich-texts.item_add", $form) }}',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.status == true) {
+                            $(".add_rich_text_close").trigger("click");
+                            rich_text_datatable.ajax.reload();
+                            Codebase.helpers('jq-notify', {
+                                align: 'right',
+                                from: 'top',
+                                type: 'success',
+                                icon: 'fa fa-check me-1',
+                                message: response.message
+                            });
+                        } else {
+                            Codebase.helpers('jq-notify', {
+                                z_index: 99999,
+                                align: 'right',
+                                from: 'top',
+                                type: 'danger',
+                                icon: 'fa fa-times me-1',
+                                message: response.message
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        Codebase.helpers('jq-notify', {
+                            z_index: 99999,
+                            align: 'right',
+                            from: 'top',
+                            type: 'danger',
+                            icon: 'fa fa-times me-1',
+                            message: (xhr.status === 422) ? xhr.responseJSON.message : xhr.responseText
+                        });
+                    },
+                    complete: function () {
+                        isLoading = false;
+                    }
+                });
+            });
+
+            $(document).on('click', '.update_rich_text_item', function () {
+                let modal = $('#edit_rich_text_model');
+
+                modal.find('input[name="detail_id"]').val($(this).data('id'));
+                modal.find('input[name="name"]').val($(this).data('name'));
+                modal.find('textarea[name="value"]').val($(this).data('value'));
+
+                if (CKEDITOR.instances.edit_rich_text_value) {``
+                    CKEDITOR.instances.edit_rich_text_value.destroy();
+                }
+                CKEDITOR.replace('edit_rich_text_value');
+
+                setTimeout(function () {
+                    CKEDITOR.instances.edit_rich_text_value.setData($(this).data('value'));
+                }.bind(this), 100);
+
+                modal.modal('show');
+            });
+
+            $(document).on('submit', '#edit_rich_text_form', function (e) {
+                e.preventDefault();
+                if (isLoading) {
+                    return false;
+                }
+
+                isLoading = true;
+
+                let formData = new FormData(this);
+                let detail_id = $(this).find('input[name="detail_id"]').val();
+                $.ajax({
+                    type: 'POST',
+                    url: ('{{ route("form.rich-texts.item_update", [$form, ':detail_id']) }}').replace(':detail_id', detail_id),
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.status == true) {
+                            $(".edit_rich_text_close").trigger("click");
+                            rich_text_datatable.ajax.reload();
+                            Codebase.helpers('jq-notify', {
+                                align: 'right',
+                                from: 'top',
+                                type: 'success',
+                                icon: 'fa fa-check me-1',
+                                message: response.message
+                            });
+                        } else {
+                            Codebase.helpers('jq-notify', {
+                                z_index: 99999,
+                                align: 'right',
+                                from: 'top',
+                                type: 'danger',
+                                icon: 'fa fa-times me-1',
+                                message: response.message
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        Codebase.helpers('jq-notify', {
+                            z_index: 99999,
+                            align: 'right',
+                            from: 'top',
+                            type: 'danger',
+                            icon: 'fa fa-times me-1',
+                            message: (xhr.status === 422) ? xhr.responseJSON.message : xhr.responseText
+                        });
+                    },
+                    complete: function () {
+                        isLoading = false;
+                    }
+                });
+            });
+
+            $(document).on("click", ".delete_rich_text_item", function(e) {
+                let deleteId = $(this).data('id');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this rich text!",
+                    icon: "warning",
+                    showCancelButton: !0,
+                    customClass: {
+                        confirmButton: "btn btn-danger m-1",
+                        cancelButton: "btn btn-secondary m-1",
+                    },
+                    confirmButtonText: "Yes, delete it!",
+                    html: !1,
+                    preConfirm: (e) =>
+                        new Promise((e) => {
+                            setTimeout(() => {
+                                e();
+                            }, 50);
+                        }),
+                }).then((resp) => {
+                    if(resp.value) {
+                        jQuery.ajax({
+                            url: ('{{ route('form.rich-texts.item_delete', [$form, ':detailid']) }}').replace(':detailid', deleteId),
+                            method: 'DELETE',
+                            success: function(result) {
+                                if(result.status == true) {
+                                    rich_text_datatable.ajax.reload();
                                     Codebase.helpers('jq-notify', {
                                         align: 'right',
                                         from: 'top',

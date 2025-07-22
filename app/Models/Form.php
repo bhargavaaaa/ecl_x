@@ -23,6 +23,6 @@ class Form extends Model
 
     public function rich_texts(): HasMany
     {
-        return $this->hasMany(RichText::class);
+        return $this->hasMany(RichText::class, 'form_id', 'id');
     }
 }

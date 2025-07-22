@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('get-data/{slug}', function (Request $request) {
+    $form = \App\Models\Form::with(['titles', 'images', 'rich_texts'])->where('slug', $request->slug)->first();
+    if (empty($form)) {
+        return response()->json(["status" => false, "message" => "Form not found."], 404);
+    }
+
+    foreach ($form->images as &$image) {
+        $image->image = getStoredImage($image->image);
+    }
+    return response()->json(["status" => true, "message" => "Form found.", "data" => $form]);
 });

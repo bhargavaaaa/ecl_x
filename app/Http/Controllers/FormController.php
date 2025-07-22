@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Form;
 use App\Models\Image;
+use App\Models\RichText;
 use App\Models\Title;
 use Illuminate\Http\Request;
 use App\DataTables\FormDataTable;
@@ -296,5 +297,102 @@ class FormController extends Controller
         DB::commit();
 
         return response()->json(["status" => true, 'message' => "Image has been deleted."]);
+    }
+
+    public function rich_text_get(Request $request, Form $form)
+    {
+        $data = $form->rich_texts()->get();
+
+        return datatables()->of($data)
+            ->addIndexColumn()
+            ->editColumn('value', function ($data) {
+                return Str::limit(strip_tags($data->value), 30);
+            })
+            ->addColumn('action', function ($data) {
+                $html = '<div class="btn-group">';
+                $html .= getEditButton('javascript:;', 'update_rich_text_item', "data-id=\"$data->id\" data-name=\"$data->name\" data-value=\"$data->value\"");
+                $html .= getDeleteButton("javascript:;", "delete_rich_text_item", "data-id=\"$data->id\"");
+                $html .= '</div>';
+                return $html;
+            })
+            ->rawColumns(['action'])
+            ->make();
+    }
+
+    public function rich_text_add(Request $request, Form $form)
+    {
+        $rules = [
+            'name' => ['required', Rule::unique('rich_texts', 'name')->where(function ($query) use ($form) {
+                $query->where('form_id', $form->id);
+            })],
+            'value' => ['required'],
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            $messages = $validator->messages();
+            $errorMessage = implode(', ', $messages->all());
+            return response()->json(["status" => false, "message" => $errorMessage]);
+        }
+
+        DB::beginTransaction();
+        try {
+            $rich_text = new RichText();
+            $rich_text->name = $request->name;
+            $rich_text->value = $request->value;
+            $form->rich_texts()->save($rich_text);
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(["status" => false, "message" => "Something went wrong, " . $e->getMessage()]);
+        }
+        DB::commit();
+
+        return response()->json(["status" => true, 'message' => "Rich Text has been added."]);
+    }
+
+    public function rich_text_update(Request $request, Form $form, string $detailid)
+    {
+        $rules = [
+            'name' => ['required', Rule::unique('rich_texts', 'name')->where(function ($query) use ($detailid, $form) {
+                $query->where('form_id', $form->id)->whereNot('id', $detailid);
+            })],
+            'value' => ['required'],
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            $messages = $validator->messages();
+            $errorMessage = implode(', ', $messages->all());
+            return response()->json(["status" => false, "message" => $errorMessage]);
+        }
+
+        DB::beginTransaction();
+        try {
+            $rich_text = $form->rich_texts()->find($detailid);
+            $rich_text->name = $request->name;
+            $rich_text->value = $request->value;
+            $form->rich_texts()->save($rich_text);
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(["status" => false, "message" => "Something went wrong, " . $e->getMessage()]);
+        }
+        DB::commit();
+
+        return response()->json(["status" => true, 'message' => "Rich Text has been updated."]);
+    }
+
+    public function rich_text_delete(Request $request, Form $form, string $detailid)
+    {
+        DB::beginTransaction();
+        try {
+            $rich_text = $form->rich_texts()->find($detailid);
+            $rich_text->delete();
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(["status" => false, "message" => "Something went wrong, " . $e->getMessage()]);
+        }
+        DB::commit();
+
+        return response()->json(["status" => true, 'message' => "Rich Text has been deleted."]);
     }
 }
