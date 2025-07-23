@@ -222,7 +222,7 @@ class FormController extends Controller
             'name' => ['required', Rule::unique('images', 'name')->where(function ($query) use ($form) {
                 $query->where('form_id', $form->id);
             })],
-            'image' => ['required', 'image'],
+            'image' => ['required', 'file'],
         ];
 
         $validator = Validator::make($request->all(), $rules);
